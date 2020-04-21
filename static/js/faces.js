@@ -27,7 +27,7 @@ var img_links = [
 ]
 
 
-var trying = d3.select(".vis-body")
+var trying = d3.select(".vis-right")
 		.append("svg")
 		.attr("class", "blerb")
 		.attr("width", 1)
@@ -49,14 +49,12 @@ var imgPattern = defs.selectAll("pattern").data(img_links)
 								.append("image")
 									.attr("x", 0)
 									.attr("y", 0)
-									.attr("width", 80)
-									.attr("height", 80)
+									.attr("width", 86)
+									.attr("height", 86)
 									.attr("xlink:href", function(d) {
 										return d;
 									})
 
-
-console.log(img_id("Leslie Knope"))
 var peep_label = d3.select("#faces").append("div")	
 				    .attr("class", "label")				
 				    .style("opacity", 0);
@@ -87,13 +85,12 @@ var fcircles = d3.select(".peeps").selectAll("circle")
 				})
 				.attr("cy", faces_height/2.5)
 				.style("fill", function(d, i) {
-					console.log('url(#'+ "img_" + i + ")");
 					return 'url(#'+ "img_" + i + ")";
 				})
 				.style("stroke-width", "1px")
 				.style("stroke", "gray")
 				.on("mouseover", function(d) {
-					d3.select(this).transition().duration(300)
+					d3.select(this).transition().duration(200)
 													.attr("r", 43)
 
 				})
