@@ -39,11 +39,14 @@ var img_links = [
 	"static/imgs/jerry.jpg"
 ]
 
-
+// some dimensions
 var faces_width = $("#faces").width();
 var faces_height = $("#faces").height();
 var circle_dims = (faces_width / (main_chars.length))
+var buffer = (0.051 * faces_width);
 
+
+// using svg patterns with imgs to fill the character avatars
 var image_app = d3.select(".vis-right")
 		.append("svg")
 		.attr("class", "blerb")
@@ -65,13 +68,14 @@ var imgPattern = defs.selectAll("pattern").data(img_links)
 								.attr("patternUnits", "objectBoundingBox")
 								.append("image")
 									.attr("x", 0)
-									.attr("y", 2)
+									.attr("y", 0)
 									.attr("width", circle_dims)
 									.attr("height", circle_dims)
 									.attr("xlink:href", function(d) {
 										return d;
 									})
 
+// svg to hold the chatacter avatars
 var fsvg = d3.select("#faces")
 					.append("svg")
 						.attr("class", "peeps")
@@ -79,6 +83,7 @@ var fsvg = d3.select("#faces")
 						.attr("height", faces_height)
 
 
+// draw the character avatars
 var fcircles = d3.select(".peeps").selectAll("circle")
 					.data(main_chars)
 
@@ -88,11 +93,11 @@ var fcircles = d3.select(".peeps").selectAll("circle")
 				.attr("id", function(d) {
 					return d;
 				})
-				.attr("r", "35px")
+				.attr("r", (circle_dims*.93)/2)
 				.attr("cx", function(d, i) {
-					return (circle_dims*i) +40;
+					return (circle_dims*i)+buffer;
 				})
-				.attr("cy", faces_height/2.5)
+				.attr("cy", faces_height/2.4)
 				.style("fill", function(d, i) {
 					return 'url(#'+ "img_" + i + ")";
 				})
@@ -100,12 +105,12 @@ var fcircles = d3.select(".peeps").selectAll("circle")
 				.style("stroke", "gray")
 				.on("mouseover", function(d) {
 					d3.select(this).transition().duration(200)
-													.attr("r", 40)
+													.attr("r", ((circle_dims*.93)/2)+3)
 
 				})
 				.on("mouseout", function(d) {
 					d3.select(this).transition().duration(300)
-												.attr("r", 35)
+												.attr("r", (circle_dims*.93)/2)
 				})
 				.on("click", function(d) {
 					var currid = d;
@@ -123,6 +128,7 @@ var fcircles = d3.select(".peeps").selectAll("circle")
 					})
 				})
 
+// create the "X" axis to display the names
 var xs = d3.scaleBand()
 				.domain(main_chars)
 				.range([0, faces_width])
@@ -135,6 +141,7 @@ plotx.attr("class", "axis")
 						.call(plotx=>plotx.select(".domain").remove())
 
 
+// draw the underlines to show which character is selected
 var underlines = d3.select(".peeps").append("g").selectAll("rect")
 									.data(main_chars)
 									.enter()
@@ -143,7 +150,7 @@ var underlines = d3.select(".peeps").append("g").selectAll("rect")
 									.attr("id", function(d) {
 										return d;
 									})
-									.attr("width", 75)
+									.attr("width", circle_dims)
 									.attr("height", 4)
 									.attr("x", function(d, i) {
 										return (circle_dims*i);

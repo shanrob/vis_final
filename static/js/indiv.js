@@ -25,3 +25,6 @@ function drawIntro(char) {
 	d3.select("#char-quote").html('"' + quotes[char] + '"')
 }
 
+function drawCharacterVis(data) {
+	
+}
