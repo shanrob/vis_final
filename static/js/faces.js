@@ -156,7 +156,9 @@ var underlines = d3.select(".peeps").append("g").selectAll("rect")
 										return (circle_dims*i);
 									})
 									.attr("rx", 2)
-									.style("fill", "#ccc")
+									.style("fill", function(d) {
+										return colors[d];
+									})
 									.style("opacity", 0)
 									.attr("transform", "translate(0," + (faces_height - 6) +")")
 

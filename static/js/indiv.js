@@ -1,5 +1,12 @@
 
 
+$(window).on("load", function(){
+	console.log("are we getting this?")
+	d3.select(".underline").style("opacity", 1);
+	drawIntro("Leslie Knope");
+
+});
+
 $(".mug").on("click", function() {
 	var name = this.id
 	drawIntro(name);
@@ -26,5 +33,5 @@ function drawIntro(char) {
 }
 
 function drawCharacterVis(data) {
-	
+
 }
